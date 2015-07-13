@@ -1,0 +1,213 @@
+
+
+#import "KSKit.h"
+
+/*
+ *
+ *
+ *
+ *
+ *
+ */
+
+
+
+
+
+//
+// releas并置nil
+//
+#define RELEASE_SAFELY(__POINTER) { [__POINTER release]; __POINTER = nil; }
+//
+// 是否高清
+
+#define isRetina                (([[[UIDevice currentDevice] systemVersion] intValue] >= 4 && [[UIScreen mainScreen] scale] == 2.0 ))
+//
+//
+//
+#define isiPad                  (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+#define isiPhone                (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+//
+//
+//
+#define isSimulator             (NSNotFound != [[[UIDevice currentDevice] model] rangeOfString:@"Simulator"].location)
+
+#define isIPhone5               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define isIPhone4               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define SYSTEM_VERSION          [[[UIDevice currentDevice] systemVersion] floatValue]
+//
+// 颜色
+//
+#define RGBCOLOR(r,g,b)         [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
+#define RGBACOLOR(r,g,b,a)      [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f \
+alpha:(a)]
+
+#define HSVCOLOR(h,s,v)         [UIColor colorWithHue:(h) saturation:(s) value:(v) alpha:1]
+#define HSVACOLOR(h,s,v,a)      [UIColor colorWithHue:(h) saturation:(s) value:(v) alpha:(a)]
+
+#define RGBA(r,g,b,a)           (r)/255.0f, (g)/255.0f, (b)/255.0f, (a)
+#define STRING_COLOER(C)        str2rgb(C)
+
+
+//
+//针对兼容性相关的宏定义
+//
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_2_0
+#define kCFCoreFoundationVersionNumber_iPhoneOS_2_0 478.23
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_2_1
+#define kCFCoreFoundationVersionNumber_iPhoneOS_2_1 478.26
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_2_2
+#define kCFCoreFoundationVersionNumber_iPhoneOS_2_2 478.29
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_3_0
+#define kCFCoreFoundationVersionNumber_iPhoneOS_3_0 478.47
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_3_1
+#define kCFCoreFoundationVersionNumber_iPhoneOS_3_1 478.52
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_3_2
+#define kCFCoreFoundationVersionNumber_iPhoneOS_3_2 478.61
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_0
+#define kCFCoreFoundationVersionNumber_iPhoneOS_4_0 550.32
+#endif
+
+#ifndef kCFCoreFoundationVersionNumber_iPhoneOS_5_0
+#define kCFCoreFoundationVersionNumber_iPhoneOS_5_0 675.000000
+#endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
+#define IF_IOS5_OR_GREATER(...) \
+if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_5_0) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS5_OR_GREATER(...)
+#endif
+
+#define IF_PRE_IOS5(...) if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iPhoneOS_5_0) \
+{ \
+__VA_ARGS__ \
+}
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
+#define IF_IOS4_OR_GREATER(...) \
+if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iPhoneOS_4_0) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS4_OR_GREATER(...)
+#endif
+
+#define IF_PRE_IOS4(...) if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iPhoneOS_4_0) \
+{ \
+__VA_ARGS__ \
+}
+
+
+
+// The general purpose logger. This ignores logging levels.
+#if CXLOG
+
+#define KSDINFO(xx, ...)            NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+
+#else
+#define KSDINFO(xx, ...)            ((void)0)
+#endif
+
+
+
+
+
+
+#define DICT_VAL(a, b)              [a valueForKeyPath:b]
+#define DICT_INTVAL(a, b)           [[a valueForKeyPath:b] intValue]
+#define DICT_FLOATVAL(a, b)         [[a valueForKeyPath:b] floatValue]
+#define DICT_BOOLVAL(a, b)          DICT_INTVAL(a,b)==1
+
+#define INT(a)                      [NSNumber numberWithInt:a]
+#define INTEGER(a)                  [NSNumber numberWithInteger:a]
+#define DOUBLE(a)                   [NSNumber numberWithDouble:a]
+#define FLOAT(a)                    [NSNumber numberWithFloat:a]
+#define STR_FORMAT(a, ...)          [NSString stringWithFormat:a, ##__VA_ARGS__]
+
+#define SYSFont(a) [UIFont systemFontOfSize:a]
+#define SYSBoldFont(a) [UIFont boldSystemFontOfSize:a]
+
+//#define CGFULL [UIScreen mainScreen].bounds
+#define CGFULLFRAME                 CGRectMake(0,0,1024,768)
+#define CGFULL                      [UIUtil currentOrientation]==0?CGRectMake(0,0,isiPad?768:320,isiPad?1024:(isIPhone5?566:480)):CGRectMake(0,0,isiPad?1024:(isIPhone5?566:480),isiPad?768:320)
+#define CGFULL_WITH_NAVI            [UIUtil currentOrientation]==0?CGRectMake(0,0,isiPad?768:320,(isiPad?1024:(isIPhone5?566:480))-44):CGRectMake(0,0,isiPad?1024:(isIPhone5?566:480),(isiPad?768:320)-44)
+#define CGFULL_WITH_STATUE          [UIUtil currentOrientation]==0?CGRectMake(0,0,isiPad?768:320,(isiPad?1024:(isIPhone5?566:480))-20):CGRectMake(0,0,isiPad?1024:(isIPhone5?566:480),(isiPad?768:320)-20)
+
+#define MAIN_SCREEN         [UIScreen mainScreen].bounds
+
+
+#define USER_DEFAULT        [NSUserDefaults standardUserDefaults]
+#define FILE_DEFAULT        [NSFileManager defaultManager]
+
+#define isReachability      [[Reachability reachabilityForInternetConnection]isReachable]
+#define isWIFIReachability  [[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] != NotReachable
+#define is3GReachability    [[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable
+
+
+#define ScreenHeight        [[UIScreen mainScreen] bounds].size.height
+#define ScreenWidth         [[UIScreen mainScreen] bounds].size.width
+#define StateBarHeight      20
+#define MainHeight          (ScreenHeight - StateBarHeight)
+#define MainWidth           ScreenWidth
+
+//
+//
+//
+typedef enum{
+kTagWindowIndicatorView                                            = 5001,
+	kTagWindowIndicator,
+}WindowSubViewTag;
+
+
+
+
+
+
+#define  FONT_ROUND(f) [UIFont fontWithName:@"HelveticaRoundedLTStd-Black" size:f]
+
+#define  DATE_FORMATE_MID_LINE                                   @"yyyy-MM-dd"
+#define  TIME_FORMATE_POINT                                      @"HH:mm:ss"
+#define  TIME_FORMATE_MID_LINE                                   @"HH-mm-ss"
+#define  TIME_FORMATE_SHORT_MID_POINT                            @"HH:mm"
+#define  DATE_FULL_FORMATE                                       @"yyyy-MM-dd HH:mm:ss"
+
+
+
+
+#define  CalendarUnitYear       (SYSTEM_VERSION>=8.0?NSCalendarUnitYear:NSYearCalendarUnit)
+#define  CalendarUnitMonth      (SYSTEM_VERSION>=8.0?NSCalendarUnitMonth:NSMonthCalendarUnit)
+#define  CalendarUnitDay        (SYSTEM_VERSION>=8.0?NSCalendarUnitDay:NSDayCalendarUnit)
+#define  CalendarUnitHour       (SYSTEM_VERSION>=8.0?NSCalendarUnitHour:NSHourCalendarUnit)
+#define  CalendarUnitMinute     (SYSTEM_VERSION>=8.0?NSCalendarUnitMinute:NSMinuteCalendarUnit)
+#define  CalendarUnitSecond     (SYSTEM_VERSION>=8.0?NSCalendarUnitSecond:NSSecondCalendarUnit)
+#define  CalendarUnitWeek       (SYSTEM_VERSION>=8.0?NSCalendarUnitWeekOfYear:NSWeekCalendarUnit)
+#define  CalendarUnitWeekDay    (SYSTEM_VERSION>=8.0?NSCalendarUnitWeekday:NSWeekdayCalendarUnit)
+#define  GregorianCalendar      (SYSTEM_VERSION>=8.0?NSCalendarIdentifierGregorian:NSGregorianCalendar)
+
+
+//#define  NO_WARNING_BEGIN  #pragma clang diagnostic push \
+//#pragma clang diagnostic ignored "-Wdeprecated-declarations" \
+//
+//
+//#define  NO_WARNING_end     #pragma clang diagnostic pop
+
