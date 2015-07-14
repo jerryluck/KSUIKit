@@ -56,7 +56,7 @@
 		C41E868D1B5144760031C166 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
 		C41E86931B5144760031C166 /* FileManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManage.h; sourceTree = "<group>"; };
 		C41E86941B5144760031C166 /* FileManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManage.m; sourceTree = "<group>"; };
-		C41E869B1B5144760031C166 /* KSApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KSApp-Prefix.pch"; sourceTree = "<group>"; };
+		C41E869B1B5144760031C166 /* KSApp_Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSApp_Config.h; sourceTree = "<group>"; };
 		C41E869C1B5144760031C166 /* KSBootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSBootstrap.h; sourceTree = "<group>"; };
 		C41E869D1B5144760031C166 /* KSBootstrap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSBootstrap.m; sourceTree = "<group>"; };
 		C41E869E1B5144760031C166 /* KSKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKit.h; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 				C41E868D1B5144760031C166 /* DateUtil.m */,
 				C41E86931B5144760031C166 /* FileManage.h */,
 				C41E86941B5144760031C166 /* FileManage.m */,
-				C41E869B1B5144760031C166 /* KSApp-Prefix.pch */,
+				C41E869B1B5144760031C166 /* KSApp_Config.h */,
 				C41E869C1B5144760031C166 /* KSBootstrap.h */,
 				C41E869D1B5144760031C166 /* KSBootstrap.m */,
 				C41E869E1B5144760031C166 /* KSKit.h */,

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "KSApp-Prefix.pch"
+#import "KSApp_Config.h"
 #import "KSBootstrap.h"
 #import "UIViewAdditions.h"
 #import "NSObjectAdditons.h"

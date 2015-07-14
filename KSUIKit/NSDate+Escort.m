@@ -1,5 +1,5 @@
 #import "NSDate+Escort.h"
-#import "KSApp-Prefix.pch"
+#import "KSApp_Config.h"
 
 
 #define SECONDS_IN_MINUTE 60

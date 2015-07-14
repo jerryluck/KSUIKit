@@ -7,7 +7,7 @@
 //
 
 #import "DateUtil.h"
-#import "KSApp-Prefix.pch"
+#import "KSApp_Config.h"
 
 @implementation DateUtil
 

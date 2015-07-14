@@ -7,7 +7,7 @@
 //
 
 #import "KSBootstrap.h"
-#import "KSApp-Prefix.pch"
+#import "KSApp_Config.h"
 
 static KSDataCenter * _dataCenter;
 @implementation KSDataCenter

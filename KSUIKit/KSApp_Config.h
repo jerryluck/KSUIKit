@@ -1,18 +1,5 @@
 
-
 #import "KSKit.h"
-
-/*
- *
- *
- *
- *
- *
- */
-
-
-
-
 
 //
 // releas并置nil
@@ -36,6 +23,10 @@
 #define isIPhone5               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #define isIPhone4               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define isIPhone6               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(750, 1334), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define isIPhone6Plus               ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #define SYSTEM_VERSION          [[[UIDevice currentDevice] systemVersion] floatValue]
 //
@@ -120,7 +111,7 @@ __VA_ARGS__ \
 
 
 // The general purpose logger. This ignores logging levels.
-#if CXLOG
+#if ENABLE_LOG
 
 #define KSDINFO(xx, ...)            NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
@@ -142,13 +133,15 @@ __VA_ARGS__ \
 #define INTEGER(a)                  [NSNumber numberWithInteger:a]
 #define DOUBLE(a)                   [NSNumber numberWithDouble:a]
 #define FLOAT(a)                    [NSNumber numberWithFloat:a]
+#define BOOL(a)                     [NSNumber numberWithBool:a]
+
 #define STR_FORMAT(a, ...)          [NSString stringWithFormat:a, ##__VA_ARGS__]
 
-#define SYSFont(a) [UIFont systemFontOfSize:a]
-#define SYSBoldFont(a) [UIFont boldSystemFontOfSize:a]
+#define SYSFont(a)                  [UIFont systemFontOfSize:a]
+#define SYSBoldFont(a)              [UIFont boldSystemFontOfSize:a]
 
 //#define CGFULL [UIScreen mainScreen].bounds
-#define CGFULLFRAME                 CGRectMake(0,0,1024,768)
+#define CGFULLFRAME_IPAD                 CGRectMake(0,0,1024,768)
 #define CGFULL                      [UIUtil currentOrientation]==0?CGRectMake(0,0,isiPad?768:320,isiPad?1024:(isIPhone5?566:480)):CGRectMake(0,0,isiPad?1024:(isIPhone5?566:480),isiPad?768:320)
 #define CGFULL_WITH_NAVI            [UIUtil currentOrientation]==0?CGRectMake(0,0,isiPad?768:320,(isiPad?1024:(isIPhone5?566:480))-44):CGRectMake(0,0,isiPad?1024:(isIPhone5?566:480),(isiPad?768:320)-44)
 #define CGFULL_WITH_STATUE          [UIUtil currentOrientation]==0?CGRectMake(0,0,isiPad?768:320,(isiPad?1024:(isIPhone5?566:480))-20):CGRectMake(0,0,isiPad?1024:(isIPhone5?566:480),(isiPad?768:320)-20)
@@ -159,7 +152,7 @@ __VA_ARGS__ \
 #define USER_DEFAULT        [NSUserDefaults standardUserDefaults]
 #define FILE_DEFAULT        [NSFileManager defaultManager]
 
-#define isReachability      [[Reachability reachabilityForInternetConnection]isReachable]
+#define isReachable      [[Reachability reachabilityForInternetConnection]isReachable]
 #define isWIFIReachability  [[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] != NotReachable
 #define is3GReachability    [[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable
 
@@ -170,20 +163,13 @@ __VA_ARGS__ \
 #define MainHeight          (ScreenHeight - StateBarHeight)
 #define MainWidth           ScreenWidth
 
-//
-//
-//
-typedef enum{
-kTagWindowIndicatorView                                            = 5001,
-	kTagWindowIndicator,
-}WindowSubViewTag;
 
 
 
 
 
 
-#define  FONT_ROUND(f) [UIFont fontWithName:@"HelveticaRoundedLTStd-Black" size:f]
+
 
 #define  DATE_FORMATE_MID_LINE                                   @"yyyy-MM-dd"
 #define  TIME_FORMATE_POINT                                      @"HH:mm:ss"

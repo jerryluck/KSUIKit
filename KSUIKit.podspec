@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KSUIKit'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'A marquee view used on iOS.'
   s.description      = <<-DESC
                        It is a marquee view used on iOS, which implement by Objective-C.
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = false
 
-  s.source_files = 'KSUIKit/*'
+  s.source_files = 'KSUIKit/*.{h,m}'
   s.resources = 'KSUIKit/MBProgressHUD.bundle/**/*.png'
 
   # s.ios.exclude_files = 'Classes/osx'
