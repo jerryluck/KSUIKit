@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = '10.7'
   s.requires_arc = false
 
-  s.source_files = 'KSUIKit/*.{h,m}'
+  s.source_files = 'KSUIKit/*'
   s.resources = 'KSUIKit/MBProgressHUD.bundle/**/*.png'
 
   # s.ios.exclude_files = 'Classes/osx'
