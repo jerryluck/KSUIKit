@@ -28,7 +28,7 @@ typedef enum
 +(NSDate *)getCurrentDate;
 +(NSString *)getDateStringFromDate:(NSDate *)date;
 +(NSInteger)getDateToDateDays:(NSDate *)date withSaveDate:(NSDate *)saveDate;
-//+ (NSString * )dateToString: (NSDate * )date;
++ (NSString * )dateToString: (NSDate * )date;
 +(NSDate * )stringToDate:(NSString * )string;
 -(NSDate*)add:(NSInteger)count type:(dateType)type;
 -(NSInteger)diffTimeWithDate:(NSDate*)otherDate dateType:(dateType)type;

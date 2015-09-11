@@ -9,7 +9,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Accelerate/Accelerate.h>
 #import "UIImageAdditions.h"
-#import "KSApp_Config.h"
+#import "KSApp-Prefix.pch"
+
+
 #define radians(x) (M_PI * x / 180.0)
 
 CGFloat DegreeToRadians(CGFloat degrees);
@@ -45,7 +47,7 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
         CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
         
         if (bitmapInfo == kCGImageAlphaNone) {
-            bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
+            bitmapInfo = kCGImageAlphaNoneSkipLast;
         }
         
         
@@ -142,7 +144,7 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
     CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
     
     if (bitmapInfo == kCGImageAlphaNone) {
-        bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
+        bitmapInfo = kCGImageAlphaNoneSkipLast;
     }
     
     @try {
@@ -259,7 +261,7 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
     int w = self.size.width;
     int h = self.size.height;
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
+    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, kCGImageAlphaPremultipliedFirst);
     
     CGContextBeginPath(context);    // ...把图写到context中，省略[indent]CGContextBeginPath();
     CGContextAddArc(context, self.size.width/2, self.size.height/2, self.size.height/2, 0, radians(360), 0);
@@ -496,7 +498,8 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
 
 {
     CGRect rect = theView.frame;
-    UIGraphicsBeginImageContext(rect.size);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
+//    UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     [theView.layer renderInContext:context];
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
@@ -504,6 +507,18 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
     
     return img;
     
+}
+
++ (UIImage *)addImage:(UIImage *)useImage addMsakImage:(UIImage *)maskImage msakRect:(CGRect)rect
+{
+    UIGraphicsBeginImageContext(useImage.size);
+    [useImage drawInRect:CGRectMake(0, 0, useImage.size.width, useImage.size.height)];
+    
+    //四个参数为水印图片的位置
+    [maskImage drawInRect:rect];
+    UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resultingImage;
 }
 + (UIImage *)ImageWithColor:(UIColor *)color
 {
@@ -517,30 +532,30 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
     UIGraphicsEndImageContext();
     return theImage;
 }
-//// 对指定视图进行截图
-//+ (UIImage *)screenShotView:(UIView *)view
-//{
-//    UIImage *imageRet = nil;
-//    
-//    if (view)
-//    {
-//        if(UIGraphicsBeginImageContextWithOptions != NULL)
-//        {
-//            UIGraphicsBeginImageContextWithOptions(view.frame.size, NO, 0.0);
-//        }
-//        else
-//        {
-//            UIGraphicsBeginImageContext(view.frame.size);
-//        }
-//        
-//        //获取图像
-//        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-//        imageRet = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//    }
-//    
-//    return imageRet;
-//}
+// 对指定视图进行截图
++ (UIImage *)screenShotView:(UIView *)view
+{
+    UIImage *imageRet = nil;
+    
+    if (view)
+    {
+        if(UIGraphicsBeginImageContextWithOptions != NULL)
+        {
+            UIGraphicsBeginImageContextWithOptions(view.frame.size, NO, 0.0);
+        }
+        else
+        {
+            UIGraphicsBeginImageContext(view.frame.size);
+        }
+        
+        //获取图像
+        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+        imageRet = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
+    return imageRet;
+}
 
 // 截取试图中局部图片
 + (UIImage *)screenShotWithView:(UIView*)view inRect:(CGRect)aRect //arect 想要截图的区域
@@ -602,7 +617,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     int h = self.size.height;
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
+    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, kCGImageAlphaPremultipliedFirst);
     CGRect rect = CGRectMake(0, 0, w, h);
     
     CGContextBeginPath(context);
@@ -664,14 +679,107 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     CGGradientRelease(colorGradient);
     return resultImage;
 }
+//UIKit坐标系统原点在左上角，y方向向下的（坐标系A），但在Quartz中坐标系原点在左下角，y方向向上的(坐标系B)。图片绘制也是颠倒的。
+static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, UIImageRoundedCorner cornerMask)
+{
+    //原点在左下方，y方向向上。移动到线条2的起点。
+    CGContextMoveToPoint(context, rect.origin.x, rect.origin.y + radius);
+    
+    //画出线条2, 目前画线的起始点已经移动到线条2的结束地方了。
+    CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height - radius);
+    
+    //如果左上角需要画圆角，画出一个弧线出来。
+    if (cornerMask & UIImageRoundedCornerTopLeft) {
+        
+        //已左上的正方形的右下脚为圆心，半径为radius， 180度到90度画一个弧线，
+        CGContextAddArc(context, rect.origin.x + radius, rect.origin.y + rect.size.height - radius,
+                        radius, M_PI, M_PI / 2, 1);
+    }
+    
+    else {
+        //如果不需要画左上角的弧度。从线2终点，画到线3的终点，
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height);
+        
+        //线3终点，画到线4的起点
+        CGContextAddLineToPoint(context, rect.origin.x + radius, rect.origin.y + rect.size.height);
+    }
+    
+    //画线4的起始，到线4的终点
+    CGContextAddLineToPoint(context, rect.origin.x + rect.size.width - radius,
+                            rect.origin.y + rect.size.height);
+    
+    //画右上角
+    if (cornerMask & UIImageRoundedCornerTopRight) {
+        CGContextAddArc(context, rect.origin.x + rect.size.width - radius,
+                        rect.origin.y + rect.size.height - radius, radius, M_PI / 2, 0.0f, 1);
+    }
+    else {
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height - radius);
+    }
+    
+    CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + radius);
+    
+    //画右下角弧线
+    if (cornerMask & UIImageRoundedCornerBottomRight) {
+        CGContextAddArc(context, rect.origin.x + rect.size.width - radius, rect.origin.y + radius,
+                        radius, 0.0f, -M_PI / 2, 1);
+    }
+    else {
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width - radius, rect.origin.y);
+    }
+    
+    CGContextAddLineToPoint(context, rect.origin.x + radius, rect.origin.y);
+    
+    //画左下角弧线
+    if (cornerMask & UIImageRoundedCornerBottomLeft) {
+        CGContextAddArc(context, rect.origin.x + radius, rect.origin.y + radius, radius,
+                        -M_PI / 2, M_PI, 1);
+    }
+    else {
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y);
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + radius);
+    }
+    
+    CGContextClosePath(context);
+}
+
+- (UIImage *)imageRoundedRectWith:(float)radius cornerMask:(UIImageRoundedCorner)cornerMask
+{
+    UIImageView *bkImageViewTmp = [[[UIImageView alloc] initWithImage:self] autorelease];
+    
+    int w = self.size.width;
+    int h = self.size.height;
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpace, kCGImageAlphaPremultipliedFirst);
+    
+    CGContextBeginPath(context);
+    addRoundedRectToPath(context,bkImageViewTmp.frame, radius, cornerMask);
+    CGContextClosePath(context);
+    CGContextClip(context);
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, w, h), self.CGImage);
+    
+    CGImageRef imageMasked = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    
+    UIImage    *newImage = [UIImage imageWithCGImage:imageMasked];
+    
+    CGImageRelease(imageMasked);
+    
+    return newImage;
+}
 @end
 
 
 
 // Private helper methods
-//@interface UIImage (Alpha)
-//- (CGImageRef)newBorderMask:(NSUInteger)borderSize size:(CGSize)size;
-//@end
+@interface UIImage ()
+- (CGImageRef)newBorderMask:(NSUInteger)borderSize size:(CGSize)size;
+@end
 
 @implementation UIImage (Alpha)
 
@@ -912,8 +1020,8 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     CGContextRef    context = NULL;
     CGColorSpaceRef colorSpace;
     void *          bitmapData;
-    size_t             bitmapByteCount;
-    size_t             bitmapBytesPerRow;
+    int             bitmapByteCount;
+    int             bitmapBytesPerRow;
     
     // Get image width, height. We'll use the entire image.
     size_t pixelsWide = CGImageGetWidth(inImage);
@@ -952,7 +1060,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
                                      8,      // bits per component
                                      bitmapBytesPerRow,
                                      colorSpace,
-                                     (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
+                                     kCGImageAlphaPremultipliedFirst);
     if (context == NULL) {
         free (bitmapData);
         fprintf (stderr, "Context not created!");
@@ -1014,7 +1122,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
                                              8,
                                              outBuffer.rowBytes,
                                              colorSpace,
-                                             (CGBitmapInfo)kCGImageAlphaNoneSkipLast);
+                                             kCGImageAlphaNoneSkipLast);
     CGImageRef imageRef = CGBitmapContextCreateImage (ctx);
     UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
     
@@ -1062,7 +1170,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
 {
     const CGFloat EffectColorAlpha = 0.6;
     UIColor *effectColor = tintColor;
-    size_t componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);
+    int componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);
     if (componentCount == 2) {
         CGFloat b;
         if ([tintColor getWhite:&b alpha:NULL]) {
@@ -1135,7 +1243,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
             // ... if d is odd, use three box-blurs of size 'd', centered on the output pixel.
             //
             CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];
-            uint32_t radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
+            NSUInteger radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
             if (radius % 2 != 1) {
                 radius += 1; // force radius to be odd so that the three box-blur methodology works.
             }

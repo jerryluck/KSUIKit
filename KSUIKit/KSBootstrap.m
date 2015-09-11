@@ -7,7 +7,7 @@
 //
 
 #import "KSBootstrap.h"
-#import "KSApp_Config.h"
+#import "KSApp-Prefix.pch"
 
 static KSDataCenter * _dataCenter;
 @implementation KSDataCenter
@@ -83,14 +83,33 @@ UIColor* str2rgb(NSString* rgb){
 }
 +(NSString*)imgRoot
 {
+    NSString *path = STR_FORMAT(@"%@/img",[KSBootstrap root]);
+    if (![FILE_DEFAULT fileExistsAtPath:path])
+    {
+        [FILE_DEFAULT createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     return STR_FORMAT(@"%@/img",[KSBootstrap root]);
 }
 +(NSString*)smallImgRoot
 {
+    NSString *path = STR_FORMAT(@"%@/smallImg",[KSBootstrap root]);
+
+    if (![FILE_DEFAULT fileExistsAtPath:path])
+    {
+        [FILE_DEFAULT createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+
     return STR_FORMAT(@"%@/smallImg",[KSBootstrap root]);
 }
 +(NSString*)videoRoot
 {
+    NSString *path = STR_FORMAT(@"%@/video",[KSBootstrap root]);
+
+    if (![FILE_DEFAULT fileExistsAtPath:path])
+    {
+        [FILE_DEFAULT createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+
     return STR_FORMAT(@"%@/video",[KSBootstrap root]);
 }
 +(NSString*)audioRoot

@@ -157,7 +157,7 @@ static NSMutableDictionary *colorNameCache = nil;
 	return CGColorGetAlpha(self.CGColor);
 }
 
-- (unsigned int)rgbHex {
+- (UInt32)rgbHex {
 	NSAssert(self.canProvideRGBComponents, @"Must be a RGB color to use rgbHex");
 	
 	CGFloat r,g,b,a;
@@ -313,14 +313,14 @@ static NSMutableDictionary *colorNameCache = nil;
 	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
 	if (![scanner scanString:@"{" intoString:NULL]) return nil;
 	const NSUInteger kMaxComponents = 4;
-	double c[kMaxComponents];
+	CGFloat c[kMaxComponents];
 	NSUInteger i = 0;
-	if (![scanner scanDouble:&c[i++]]) return nil;
+	if (![scanner scanFloat:&c[i++]]) return nil;
 	while (1) {
 		if ([scanner scanString:@"}" intoString:NULL]) break;
 		if (i >= kMaxComponents) return nil;
 		if ([scanner scanString:@"," intoString:NULL]) {
-			if (![scanner scanDouble:&c[i++]]) return nil;
+			if (![scanner scanFloat:&c[i++]]) return nil;
 		} else {
 			// either we're at the end of there's an unexpected character here
 			// both cases are error conditions

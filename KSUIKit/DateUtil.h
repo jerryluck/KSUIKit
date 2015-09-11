@@ -17,5 +17,5 @@
 + (NSDate *)dateFromString:(NSString *)string format:(NSString *)fmt;
 + (NSString *)strFromDate:(NSDate *)date format:(NSString *)fmt;
 + (void)addDate;
-+(NSInteger)getYearByDate:(NSDate*)date;
++(int)getYearByDate:(NSDate*)date;
 @end

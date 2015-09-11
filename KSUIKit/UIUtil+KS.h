@@ -39,7 +39,7 @@ typedef enum{
 /**
  *  开启Log打印
  */
-//+ (void)enableNSLog;
++ (void)enableNSLog;
 + (NSInteger) currentOrientation;
 + (void)setOrientation:(UIInterfaceOrientation)orientation;
 + (void)animatedWithView:(UIView*)view degree:(CGFloat)degree duration:(NSTimeInterval)duration;
@@ -83,7 +83,7 @@ typedef enum{
 + (void)addAnimationSlideRight:(UIView *)viewToAddAnimation;
 
 + (void)addAnimationWaveShake:(UIView *)viewToAddAnimation;
-//+ (UIImage *)snapshotScreen;
++ (UIImage *)snapshotScreen;
 +(BOOL)checkInternetConnectionWithAction:(BOOL)hasAction;
 + (UIImage *)snapshotView:(UIView *)shotView;
 + (void)saveImageToPhotoAlbum:(UIImage *)image;
@@ -151,28 +151,28 @@ typedef enum{
 + (void)hideModualView;
 + (void)roundCenter:(UIView *)view;
 
-//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view;
-//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size;
-//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize;
++ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view;
++ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size;
++ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize;
 + (void)showFadeInAnimation:(UIView*)view endAlpha:(CGFloat)alpha;
-//+(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild;
++(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild;
 
-//+ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width;
++ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width;
 + (UIButton*)getBackButton;
 @end
 
 
-//@interface ImageDataOperation : NSOperation {
-//	NSString *imageUrl;
-//	UIView *imgView;
-//    CGSize newSize;
-//    BOOL shouldResize;
-//}
-////- (id)initWithURL:(NSString *)url view:(UIView *)view;
-//- (id)initWithURL:(NSString *)url view:(UIView *)view resize:(CGSize)size;
-//- (id)initWithURL:(NSString *)url view:(UIView *)view shouldResize:(BOOL)resize;
-//
-//@end
+@interface ImageDataOperation : NSOperation {
+	NSString *imageUrl;
+	UIView *imgView;
+    CGSize newSize;
+    BOOL shouldResize;
+}
+- (id)initWithURL:(NSString *)url view:(UIView *)view;
+- (id)initWithURL:(NSString *)url view:(UIView *)view resize:(CGSize)size;
+- (id)initWithURL:(NSString *)url view:(UIView *)view shouldResize:(BOOL)resize;
+
+@end
 
 
 

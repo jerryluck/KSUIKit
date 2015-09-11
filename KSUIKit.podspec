@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name             = 'KSUIKit'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A marquee view used on iOS.'
   s.description      = <<-DESC
                        It is a marquee view used on iOS, which implement by Objective-C.
                        DESC
   s.homepage         = 'https://github.com/jerryluck1/KSUIKit'
-  # s.screenshots      = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  # s.screenshots      = “www.example.com/screenshots_1”, “www.example.com/screenshots_2”
   s.license          = 'MIT'
   s.author           = { '高广亮' => 'gaoguang2008@126.com' }
   s.source           = { :git => 'https://github.com/jerryluck1/KSUIKit.git', :tag => s.version.to_s }
@@ -23,6 +23,10 @@ Pod::Spec.new do |s|
   # s.ios.exclude_files = 'Classes/osx'
   # s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
-  s.frameworks = 'Foundation', 'CoreGraphics', 'UIKit'
+  s.frameworks = 'Foundation', 'CoreGraphics', 'UIKit', ' ImageIO','CoreImage','CoreGraphics','SystemConfiguration','MoblieCoreServices'
+  s.dependency 'FMDB'
+s.dependency 'libz.1.2.5'
+s.dependency 'libxml2'
+s.dependency 'libsqlite3.0'
 
 end

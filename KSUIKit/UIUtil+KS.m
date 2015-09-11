@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIUtil+KS.h"
 #import "KSBootstrap.h"
-#import "KSApp_Config.h"
+#import "KSApp-Prefix.pch"
 
 
 @implementation UIUtil
@@ -322,51 +322,51 @@
     [viewToAddAnimation.layer addAnimation:animation forKey:@"popup"];
 }
 
-//+ (UIImage *)snapshotScreen {
-//    // Create a graphics context with the target size
-//    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
-//    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
-//    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
-//    if (NULL != UIGraphicsBeginImageContextWithOptions)
-//        UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
-//    else
-//        UIGraphicsBeginImageContext(imageSize);
-//    
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//    
-//    // Iterate over every window from back to front
-//    for (UIWindow *window in [[UIApplication sharedApplication] windows]) 
-//    {
-//        if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen])
-//        {
-//            // -renderInContext: renders in the coordinate space of the layer,
-//            // so we must first apply the layer's geometry to the graphics context
-//            CGContextSaveGState(context);
-//            // Center the context around the window's anchor point
-//            CGContextTranslateCTM(context, [window center].x, [window center].y);
-//            // Apply the window's transform about the anchor point
-//            CGContextConcatCTM(context, [window transform]);
-//            // Offset by the portion of the bounds left of and above the anchor point
-//            CGContextTranslateCTM(context,
-//                                  -[window bounds].size.width * [[window layer] anchorPoint].x,
-//                                  -[window bounds].size.height * [[window layer] anchorPoint].y);
-//            
-//            // Render the layer hierarchy to the current context
-//            [[window layer] renderInContext:context];
-//            
-//            // Restore the context
-//            CGContextRestoreGState(context);
-//        }
-//    }
-//    
-//    // Retrieve the screenshot image
-//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-//    
-//    UIGraphicsEndImageContext();
-//    
-//    return image;
-//}
-//
++ (UIImage *)snapshotScreen {
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Iterate over every window from back to front
+    for (UIWindow *window in [[UIApplication sharedApplication] windows]) 
+    {
+        if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen])
+        {
+            // -renderInContext: renders in the coordinate space of the layer,
+            // so we must first apply the layer's geometry to the graphics context
+            CGContextSaveGState(context);
+            // Center the context around the window's anchor point
+            CGContextTranslateCTM(context, [window center].x, [window center].y);
+            // Apply the window's transform about the anchor point
+            CGContextConcatCTM(context, [window transform]);
+            // Offset by the portion of the bounds left of and above the anchor point
+            CGContextTranslateCTM(context,
+                                  -[window bounds].size.width * [[window layer] anchorPoint].x,
+                                  -[window bounds].size.height * [[window layer] anchorPoint].y);
+            
+            // Render the layer hierarchy to the current context
+            [[window layer] renderInContext:context];
+            
+            // Restore the context
+            CGContextRestoreGState(context);
+        }
+    }
+    
+    // Retrieve the screenshot image
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 + (UIImage *)snapshotView:(UIView *)shotView {
     UIGraphicsBeginImageContext(shotView.bounds.size);
     [shotView.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -395,13 +395,11 @@
     }
     return YES;
 }
-//+ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width
-//{
-//    NO_WARNING_BEGIN
-//    CGSize size = [string sizeWithFont:font constrainedToSize:CGSizeMake(width,100000) lineBreakMode:NSLineBreakByWordWrapping];
-//    return size.height;
-//    NO_WARNING_end
-//}
++ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width
+{
+    CGSize size = [string sizeWithFont:font constrainedToSize:CGSizeMake(width,100000) lineBreakMode:NSLineBreakByWordWrapping];
+    return size.height;
+}
 
 + (UIButton*)getBackButton
 {
@@ -513,7 +511,7 @@
 	label.text = text;
 	label.textColor = textColor;
 	label.backgroundColor = [UIColor clearColor];
-	label.textAlignment = NSTextAlignmentLeft;
+	label.textAlignment = UITextAlignmentLeft;
 	label.font = font;
     return label;
 }
@@ -672,29 +670,7 @@
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.tag = kTagHubTextView;
-    
-    CGSize size = CGSizeZero;
-    
-    if (SYSTEM_VERSION>=7)
-    {
-        NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:messageLabel.font,NSFontAttributeName,nil];
-        
-        size = [message boundingRectWithSize:CGSizeMake(view.width/4, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
-        
-    }
-    else
-    {
-#pragma clang diagnostic push
-        
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        
-        size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(view.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-
-#pragma clang diagnostic pop
-    }
-
-
-    
+    CGSize size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(view.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     messageLabel.size = CGSizeMake(size.width+40, size.height+40);
     messageLabel.center = view.center;
     [maskView addSubview:messageLabel];
@@ -730,25 +706,7 @@
     UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
     UILabel *messageLabel = (UILabel*)[window viewWithTag:kTagHubTextView];
     messageLabel.text = message;
-    CGSize size = CGSizeZero;
-    if (SYSTEM_VERSION>=7)
-    {
-        NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:messageLabel.font,NSFontAttributeName,nil];
-        
-        size = [message boundingRectWithSize:CGSizeMake(window.width/4, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:tdic context:nil].size;
-        
-    }
-    else
-    {
-#pragma clang diagnostic push
-        
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        
-size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(window.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-#pragma clang diagnostic pop
-    }
-    
-//    CGSize size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(window.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+    CGSize size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(window.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
     messageLabel.size = CGSizeMake(size.width+40, size.height+40);
 }
 + (void)hideProcessIndicatorWithView:(UIView *)view{
@@ -816,67 +774,67 @@ size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(wind
 	view.center = CGPointMake(round(view.center.x), round(view.center.y));
 }
 
-//#pragma mark - image downloader
-//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view {
-//    [self imageWithUrl:imgUrl toView:view shouldResize:NO];
-//}
-//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size {
-//    if (imgUrl == nil || view == nil) {
-//        return;
-//    }
-//    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
-//    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view resize:size];
-//    [operationQueue addOperation:imgDataOperation];
-//    [imgDataOperation release];
-//}
-//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize {
-//    if (imgUrl == nil || view == nil) {
-//        return;
-//    }
-//    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
-//    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view shouldResize:shouldResize];
-//    [operationQueue addOperation:imgDataOperation];
-//    [imgDataOperation release];
-//}
-//+(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild
-//{
-//    __block NSString *url = [imgUrl retain];
-//    __block NSString *path = [savePath retain];
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//        
-//        
-//        NSLog(@"%@",url);
-//        
-//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-//        if (data)
-//        {
-//            [data writeToFile:path atomically:YES];
-//            if (success)
-//            {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    success(path);
-//
-//                });
-//            }
-//            [url release];
-//        }
-//        else
-//        {
-//            if (faild)
-//            {
-//                
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    faild(path);
-//                    
-//                });
-//            }
-//            [path release];
-//        }
-//        
-//    });
-//    
-//    
-//}
+#pragma mark - image downloader
++ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view {
+    [self imageWithUrl:imgUrl toView:view shouldResize:NO];
+}
++ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size {
+    if (imgUrl == nil || view == nil) {
+        return;
+    }
+    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
+    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view resize:size];
+    [operationQueue addOperation:imgDataOperation];
+    [imgDataOperation release];
+}
++ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize {
+    if (imgUrl == nil || view == nil) {
+        return;
+    }
+    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
+    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view shouldResize:shouldResize];
+    [operationQueue addOperation:imgDataOperation];
+    [imgDataOperation release];
+}
++(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild
+{
+    __block NSString *url = [imgUrl retain];
+    __block NSString *path = [savePath retain];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        
+        NSLog(@"%@",url);
+        
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        if (data)
+        {
+            [data writeToFile:path atomically:YES];
+            if (success)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    success(path);
+
+                });
+            }
+            [url release];
+        }
+        else
+        {
+            if (faild)
+            {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    faild(path);
+                    
+                });
+            }
+            [path release];
+        }
+        
+    });
+    
+    
+}
 
 
 @end
@@ -887,7 +845,7 @@ size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(wind
 // 远程异步下载图片
 //
 ///////////////////////////////////////////////////////////////////////
-//@implementation ImageDataOperation                                                                                            
+@implementation ImageDataOperation                                                                                            
 
 //- (id)initWithURL:(NSString *)url view:(UIView *)view{
 //    self = [super init];
@@ -970,7 +928,7 @@ size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(wind
 //	[super dealloc];
 //}
 
-//@end
+@end
 
 
 

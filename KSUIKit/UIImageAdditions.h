@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <CoreImage/CoreImage.h>
 
+typedef enum {
+    UIImageRoundedCornerTopLeft = 1,
+    UIImageRoundedCornerTopRight = 1 << 1,
+    UIImageRoundedCornerBottomRight = 1 << 2,
+    UIImageRoundedCornerBottomLeft = 1 << 3
+} UIImageRoundedCorner;
+
+
 
 
 @interface UIImage(UIImageAdditions)
@@ -28,6 +36,7 @@
 - (UIImage *)imageRotatedByDegrees:(CGFloat)degrees;
 - (UIImage *)imageByApplyingAlpha:(CGFloat)alpha;
 + (UIImage *)ImageWithColor:(UIColor *)color;
++ (UIImage *)addImage:(UIImage *)useImage addMsakImage:(UIImage *)maskImage msakRect:(CGRect)rect;
 - (UIImage *)roundCorners:(CGSize) size;
 - (UIImage *)imageByScalingCircle;
 - (UIImage *) imageWithBackgroundColor:(UIColor *)bgColor
@@ -37,9 +46,10 @@
                            shadowColor:(UIColor *)shadowColor
                           shadowOffset:(CGSize)shadowOffset
                             shadowBlur:(CGFloat)shadowBlur;
-//+ (UIImage *)screenShotView:(UIView *)view;
++ (UIImage *)screenShotView:(UIView *)view;
 + (UIImage *)screenShotWithView:(UIView*)view inRect:(CGRect)aRect;
 + (UIImage*)imageFromView:(UIView *)theView;
+- (UIImage*)imageRoundedRectWith:(float)radius cornerMask:(UIImageRoundedCorner)cornerMask;
 @end
 
 @interface UIImage (Alpha)
@@ -47,8 +57,6 @@
 - (UIImage *)imageWithAlpha;
 - (UIImage *)transparentBorderImage:(NSUInteger)borderSize;
 - (UIImage *)transparentBorderImage:(NSUInteger)borderSize size:(CGSize)sz;
-- (CGImageRef)newBorderMask:(NSUInteger)borderSize size:(CGSize)size;
-
 @end
 
 @interface UIImage(KS)

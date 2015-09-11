@@ -7,7 +7,7 @@
 //
 
 #import "NSDateAdditions.h"
-#import "KSApp_Config.h"
+#import "KSApp-Prefix.pch"
 
 @implementation NSDate (KS)
 
@@ -56,9 +56,9 @@
 //计算两个日期之间的差距，过了多少天。。
 +(NSInteger)getDateToDateDays:(NSDate *)date withSaveDate:(NSDate *)saveDate
 {
-    NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:GregorianCalendar ];
-    NSUInteger unitFlags =  CalendarUnitHour | CalendarUnitMinute |
-    CalendarUnitSecond | CalendarUnitDay | CalendarUnitMonth | CalendarUnitYear;
+    NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
+    NSUInteger unitFlags =  NSHourCalendarUnit | NSMinuteCalendarUnit |
+    NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
     NSDateComponents *cps = [ chineseClendar components:unitFlags fromDate:date  toDate:saveDate  options:0];
     NSInteger diffDay   = [ cps day ];
     [chineseClendar release];
@@ -66,8 +66,8 @@
 }
 +(NSUInteger)currentMonthDays
 {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:GregorianCalendar];
-    NSRange range = [calendar rangeOfUnit:CalendarUnitDay inUnit:CalendarUnitMonth forDate:[NSDate date]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSRange range = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:[NSDate date]];
     NSUInteger numberOfDaysInMonth = range.length;
     return numberOfDaysInMonth;
 }
@@ -114,9 +114,9 @@
 -(NSDate*)add:(NSInteger)count type:(dateType)type
 {
     //获得日历对象
-    NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:GregorianCalendar];
+    NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     //通过日历对象获得日期组件对象NSDateComponents
-//    NSUInteger units = CalendarUnitYear|CalendarUnitMonth|CalendarUnitDay|CalendarUnitHour|CalendarUnitMinute|CalendarUnitSecond;
+    NSUInteger units = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
 //    NSDateComponents *components = [calender components:units fromDate:self];
 //    NSInteger year = 0;
 //    NSInteger month = 0;
@@ -151,7 +151,7 @@
         case dateTypeWeek:
         {
             //            day = day + count;
-            [components setWeekOfYear:count];
+            [components setWeek:count];
         }
             
             break;
@@ -197,23 +197,23 @@
     return [self format:@"EE"];
 }
 //今年的第几周
--(NSInteger)getWeek
+-(int)getWeek
 {
     NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:GregorianCalendar];
+                             initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *weekdayComponents = [gregorian components:NSWeekCalendarUnit fromDate:self];
     
-    NSInteger weekday = [weekdayComponents weekOfYear];
+    int weekday = [weekdayComponents week];
     return weekday;
 }
 //这个月的第几周
--(NSInteger)getWeekDayOrdinal
+-(int)getWeekDayOrdinal
 {
     NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:GregorianCalendar];
+                             initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *weekdayComponents = [gregorian components:NSWeekdayOrdinalCalendarUnit  fromDate:self];
     
-    NSInteger weekday = [weekdayComponents weekdayOrdinal];
+    int weekday = [weekdayComponents weekdayOrdinal];
     return weekday;
 }
 //计算距离某一天还有多少时间
@@ -221,11 +221,11 @@
 {
 
     
-    NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:GregorianCalendar ];
+    NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     
     NSUInteger unitFlags =
     
-    CalendarUnitHour | CalendarUnitMinute | CalendarUnitSecond | CalendarUnitDay | CalendarUnitMonth | CalendarUnitYear;
+    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
     
     NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:self  toDate:otherDate  options:0];
     

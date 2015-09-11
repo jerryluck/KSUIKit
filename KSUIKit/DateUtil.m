@@ -7,7 +7,7 @@
 //
 
 #import "DateUtil.h"
-#import "KSApp_Config.h"
+#import "KSApp-Prefix.pch"
 
 @implementation DateUtil
 
@@ -47,21 +47,21 @@
     
     return date;
 }
-+(NSInteger)getDayByDate:(NSDate*)date
++(int)getDayByDate:(NSDate*)date
 {
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:GregorianCalendar] autorelease];
+    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 //	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	NSCalendarUnit unitFlags = CalendarUnitYear | CalendarUnitMonth | CalendarUnitDay | CalendarUnitWeekDay |
-	CalendarUnitHour | CalendarUnitMinute | CalendarUnitSecond;
+	NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
+	NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
 	NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
     return [comps day];
 }
-+(NSInteger)getYearByDate:(NSDate*)date
++(int)getYearByDate:(NSDate*)date
 {
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:GregorianCalendar] autorelease];
+    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
 //	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	NSCalendarUnit unitFlags = CalendarUnitYear | CalendarUnitMonth | CalendarUnitDay | CalendarUnitWeekDay |
-	CalendarUnitHour | CalendarUnitMinute | CalendarUnitSecond;
+	NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
+	NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
 	NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
     return [comps year];
 }

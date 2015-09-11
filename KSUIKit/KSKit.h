@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import "KSApp_Config.h"
+#import "KSApp-Prefix.pch"
 #import "KSBootstrap.h"
 #import "UIViewAdditions.h"
 #import "NSObjectAdditons.h"
@@ -24,12 +23,18 @@
 #import "UIColor+Expanded.h"
 #import "UIColorAdditions.h"
 #import "Reachability.h"
-#import "MBProgressHUD+Add.h"
+#import "JSONKit.h"
 #import "UIButttonAddition.h"
 #import "KSRoundedView.h"
 #import "KSRoundAndBorderView.h"
-#import "KSLoggingViewController.h"
 #import "KSModelApp.h"
 #import "UIImageEffects.h"
+#import "ALImageView.h"
+#import "KSSafeCategory.h"
 
 
+
+
+@interface KSKit : NSObject
+
+@end

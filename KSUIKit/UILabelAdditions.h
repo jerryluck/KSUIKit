@@ -24,10 +24,10 @@
                                 font:(UIFont*)font
                            alignment:(NSTextAlignment)alignment;
 
-//- (NSAttributedString *)attributedString:(NSString*) HTMLText
-//                            URLTextColor:(UIColor*)URLTextColor
-//                                    URLs:(NSArray *__autoreleasing *)outURLs
-//                               URLRanges:(NSArray *__autoreleasing *)outURLRanges;
+- (NSAttributedString *)attributedString:(NSString*) HTMLText
+                            URLTextColor:(UIColor*)URLTextColor
+                                    URLs:(NSArray *__autoreleasing *)outURLs
+                               URLRanges:(NSArray *__autoreleasing *)outURLRanges;
 
 -(CGFloat)textHeight;
 -(CGFloat)textWidth;
@@ -39,3 +39,25 @@
 @end
 
 
+@interface TextLayoutLabel : UILabel
+
+{
+    
+@private
+    
+    CGFloat characterSpacing_;       //字间距
+    
+@private
+    
+    long linesSpacing_;   //行间距
+    
+}
+
+@property(nonatomic,assign) CGFloat characterSpacing;
+
+@property(nonatomic,assign)  long linesSpacing;
+
+-(void)setCharacterSpacing:(CGFloat)characterSpacing; //外部调用设置字间距
+-(void)setLinesSpacing:(long)linesSpacing;  //外部调用设置行间距
+
+@end

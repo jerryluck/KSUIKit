@@ -11,12 +11,12 @@
 
 @implementation NSString (KS)
 
-- (NSUInteger)indexOf:(NSString *)text {
+- (int)indexOf:(NSString *)text {
     NSRange range = [self rangeOfString:text];
     if ( range.length > 0 ) {
         return range.location;
     } else {
-        return NSNotFound;
+        return -1;
     }
 }
 - (NSString *)URLEncodedString {
@@ -46,7 +46,7 @@
     const char *value = [self UTF8String];
     
     unsigned char outputBuffer[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(value, (CC_LONG)strlen(value), outputBuffer);
+    CC_MD5(value, strlen(value), outputBuffer);
     
     NSMutableString *outputString = [[NSMutableString alloc] initWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
     for(NSInteger count = 0; count < CC_MD5_DIGEST_LENGTH; count++){
@@ -152,5 +152,13 @@
     }
 }
 
+- (BOOL)isUrl
+{
+    NSString *urlRegex = @"^http://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
+    NSString *urlRegex1 = @"^https://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegex];
+    NSPredicate *emailTest1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegex1];
+    return [emailTest evaluateWithObject:self]||[emailTest1 evaluateWithObject:self];
+}
 
 @end

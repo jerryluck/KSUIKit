@@ -105,7 +105,7 @@
 /**
  * Return the width in portrait or the height in landscape.
  */
-//@property (nonatomic, readonly) CGFloat orientationWidth;
+@property (nonatomic, readonly) CGFloat orientationWidth;
 
 /**
  * Return the height in portrait or the width in landscape.
@@ -146,7 +146,7 @@
  *
  * If the keyboard is not showing, this will simply return the normal frame.
  */
-//- (CGRect)frameWithKeyboardSubtracted:(CGFloat)plusHeight;
+- (CGRect)frameWithKeyboardSubtracted:(CGFloat)plusHeight;
 
 /**
  * Shows the view in a window at the bottom of the screen.

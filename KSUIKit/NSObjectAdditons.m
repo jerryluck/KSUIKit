@@ -13,7 +13,6 @@
 @end
 
 @implementation NSObject(KS)
-
 @end
 ///////////////////////////////////////////////////////////////////////////////
 @implementation NSNull (KS)
@@ -48,9 +47,9 @@
     return NO;
 }
 
-- (double)floatValue
+- (float)floatValue
 {
-    return 0.0;
+    return 0;
 }
 
 - (NSInteger)integerValue
@@ -91,3 +90,7 @@
 }
 
 @end
+
+
+
+
