@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KSUIKit'
-  s.version          = '1.1'
+  s.version          = '1.2'
   s.summary          = 'A marquee view used on iOS.'
   s.description      = <<-DESC
                        It is a marquee view used on iOS, which implement by Objective-C.
@@ -18,15 +18,23 @@ Pod::Spec.new do |s|
   s.requires_arc = false
 
   s.source_files = 'KSUIKit/*.{h,m}'
-  s.resources = 'KSUIKit/MBProgressHUD.bundle/**/*.png'
+  #s.resources = 'KSUIKit/MBProgressHUD.bundle/**/*.png'
 
   # s.ios.exclude_files = 'Classes/osx'
   # s.osx.exclude_files = 'Classes/ios'
   # s.public_header_files = 'Classes/**/*.h'
-  s.frameworks = 'Foundation', 'CoreGraphics', 'UIKit', ' ImageIO','CoreImage','CoreGraphics','SystemConfiguration','MoblieCoreServices'
-  s.dependency 'FMDB'
-s.dependency 'libz.1.2.5'
-s.dependency 'libxml2'
-s.dependency 'libsqlite3.0'
+  s.framework = 'Foundation'
+s.framework = 'CoreFoundation'
+s.framework = 'CoreGraphics'
+s.framework = 'UIKit'
+s.framework = 'ImageIO'
+s.framework = 'CoreImage'
+s.framework = 'CoreGraphics'
+s.framework = 'SystemConfiguration'
+s.framework = 'MobileCoreServices'
+s.library   = 'xml2'
+s.library   = 'z'
+s.library   = 'sqlite'
+
 
 end
