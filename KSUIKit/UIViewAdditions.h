@@ -105,7 +105,7 @@
 /**
  * Return the width in portrait or the height in landscape.
  */
-@property (nonatomic, readonly) CGFloat orientationWidth;
+//@property (nonatomic, readonly) CGFloat orientationWidth;
 
 /**
  * Return the height in portrait or the width in landscape.
@@ -127,12 +127,7 @@
  */
 - (void)removeAllSubviews;
 
-/**
- * WARNING: This depends on undocumented APIs and may be fragile.  For testing only.
- */
-#ifdef DEBUG
-- (void)simulateTapAtPoint:(CGPoint)location;
-#endif
+
 
 /**
  * Calculates the offset of this view from another view in screen coordinates.
@@ -141,12 +136,7 @@
  */
 - (CGPoint)offsetFromView:(UIView*)otherView;
 
-/**
- * Calculates the frame of this view with parts that intersect with the keyboard subtracted.
- *
- * If the keyboard is not showing, this will simply return the normal frame.
- */
-- (CGRect)frameWithKeyboardSubtracted:(CGFloat)plusHeight;
+
 
 /**
  * Shows the view in a window at the bottom of the screen.
@@ -169,10 +159,7 @@
  */
 - (UIViewController*)viewController;
 
-/**
- * The currentOrientation from owner viewcontroller
- */
-- (BOOL)isPortrait;
+
 
 -(BOOL) containsSubView:(UIView *)subView;
 

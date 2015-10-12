@@ -18,7 +18,6 @@ typedef enum {
 
 
 
-
 @interface UIImage(UIImageAdditions)
 
 - (UIImage *)rescaleToSize:(CGSize)size;
@@ -57,6 +56,8 @@ typedef enum {
 - (UIImage *)imageWithAlpha;
 - (UIImage *)transparentBorderImage:(NSUInteger)borderSize;
 - (UIImage *)transparentBorderImage:(NSUInteger)borderSize size:(CGSize)sz;
+- (CGImageRef)newBorderMask:(NSUInteger)borderSize size:(CGSize)size;
+
 @end
 
 @interface UIImage(KS)

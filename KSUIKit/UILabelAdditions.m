@@ -27,37 +27,6 @@
     label.backgroundColor = [UIColor clearColor];
     return label;
 }
-- (NSAttributedString *)attributedString:(NSString*) HTMLText
-                            URLTextColor:(UIColor*)URLTextColor
-                                    URLs:(NSArray *__autoreleasing *)outURLs
-                               URLRanges:(NSArray *__autoreleasing *)outURLRanges
-{
-    
-    NSArray *URLs;
-    NSArray *URLRanges;
-    UIColor *color = self.textColor;
-    UIFont *font = self.font;
-    NSMutableParagraphStyle *mps = [[NSMutableParagraphStyle alloc] init];
-    NSString *str = [NSString stringWithHTMLText:HTMLText baseURL:nil URLs:&URLs URLRanges:&URLRanges];
-    NSMutableAttributedString *mas = [[NSMutableAttributedString alloc] initWithString:str attributes:@
-                                      {
-                                          NSForegroundColorAttributeName : color,
-                                          NSFontAttributeName            : font,
-                                          NSParagraphStyleAttributeName  : mps,
-                                          
-                                      }];
-    [URLRanges enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-        [mas addAttributes:@
-         {
-             NSForegroundColorAttributeName : URLTextColor
-         } range:[obj rangeValue]];
-    }];
-    
-    *outURLs = URLs;
-    *outURLRanges = URLRanges;
-    
-    return [mas copy];
-}
 
 
 - (CGFloat)attributeTextHeight
@@ -94,7 +63,11 @@
         return [self.text boundingRectWithSize:CGSizeMake(self.width, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:tdic context:nil].size.height;
 
     }
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     return [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(self.width, MAXFLOAT) lineBreakMode:self.lineBreakMode].height;
+#pragma clang diagnostic pop
+
 }
 -(CGFloat)textWidth
 {
@@ -106,7 +79,12 @@
 
     }
 
+
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
     return [self.text sizeWithFont:self.font constrainedToSize:CGSizeMake(MAXFLOAT, self.height) lineBreakMode:self.lineBreakMode].width;
+#pragma clang diagnostic pop
 }
 
 

@@ -13,6 +13,43 @@
 @end
 
 @implementation NSObject(KS)
++ (NSString*)toJsonString:(id)obj
+{
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
+    
+    if ([jsonData length] > 0 && error == nil){
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding];
+        return jsonString;
+    }else{
+        return nil;
+    }
+    
+}
+
++ (id)objFromJsonString:(NSString*)jsonStr
+{
+    NSError *error = nil;
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                    options:NSJSONReadingAllowFragments
+                                                      error:&error];
+    
+    if (jsonObject != nil && error == nil){
+        return jsonObject;
+    }else{
+        // 解析错误
+        return nil;
+    }
+}
+extern NSString *string(id obj){
+    return [NSString stringWithFormat:@"%@",obj?:@""];
+}
 @end
 ///////////////////////////////////////////////////////////////////////////////
 @implementation NSNull (KS)

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KSUIKit'
-  s.version          = '1.2'
+  s.version          = '1.3'
   s.summary          = 'A marquee view used on iOS.'
   s.description      = <<-DESC
                        It is a marquee view used on iOS, which implement by Objective-C.
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   # s.social_media_url = 'https://twitter.com/NAME'
 
   s.platform     = :ios, '7.0'
-  # s.ios.deployment_target = '5.0'
+  # s.ios.deployment_target = '7.0'
   # s.osx.deployment_target = '10.7'
   s.requires_arc = false
 

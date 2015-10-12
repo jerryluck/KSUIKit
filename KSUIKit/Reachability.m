@@ -126,6 +126,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	{
 		CFRelease(reachabilityRef);
 	}
+    [super dealloc];
 }
 
 + (Reachability*) reachabilityWithHostName: (NSString*) hostName;

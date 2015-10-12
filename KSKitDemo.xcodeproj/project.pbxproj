@@ -17,7 +17,6 @@
 		C4C52FF11BA32C7700194888 /* ALImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52F7D1BA32C7700194888 /* ALImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C4C52FFC1BA32C7700194888 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52F991BA32C7700194888 /* DateUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C4C52FFE1BA32C7700194888 /* FileManage.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52FA01BA32C7700194888 /* FileManage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C4C52FFF1BA32C7700194888 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52FA61BA32C7700194888 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C4C530001BA32C7700194888 /* KSBootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52FA91BA32C7700194888 /* KSBootstrap.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C4C530021BA32C7700194888 /* KSModelApp.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52FAE1BA32C7700194888 /* KSModelApp.m */; };
 		C4C530031BA32C7700194888 /* KSRoundAndBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C52FB01BA32C7700194888 /* KSRoundAndBorderView.m */; };
@@ -70,8 +69,6 @@
 		C4C52F991BA32C7700194888 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
 		C4C52F9F1BA32C7700194888 /* FileManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManage.h; sourceTree = "<group>"; };
 		C4C52FA01BA32C7700194888 /* FileManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManage.m; sourceTree = "<group>"; };
-		C4C52FA51BA32C7700194888 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		C4C52FA61BA32C7700194888 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		C4C52FA71BA32C7700194888 /* KSApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KSApp-Prefix.pch"; sourceTree = "<group>"; };
 		C4C52FA81BA32C7700194888 /* KSBootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSBootstrap.h; sourceTree = "<group>"; };
 		C4C52FA91BA32C7700194888 /* KSBootstrap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSBootstrap.m; sourceTree = "<group>"; };
@@ -143,8 +140,6 @@
 				C4C52F991BA32C7700194888 /* DateUtil.m */,
 				C4C52F9F1BA32C7700194888 /* FileManage.h */,
 				C4C52FA01BA32C7700194888 /* FileManage.m */,
-				C4C52FA51BA32C7700194888 /* JSONKit.h */,
-				C4C52FA61BA32C7700194888 /* JSONKit.m */,
 				C4C52FA71BA32C7700194888 /* KSApp-Prefix.pch */,
 				C4C52FA81BA32C7700194888 /* KSBootstrap.h */,
 				C4C52FA91BA32C7700194888 /* KSBootstrap.m */,
@@ -356,7 +351,6 @@
 				C4C5301A1BA32C7700194888 /* UIColor+expanded.m in Sources */,
 				C4C530031BA32C7700194888 /* KSRoundAndBorderView.m in Sources */,
 				C41EFE9C1B513B5A0090A522 /* ViewController.m in Sources */,
-				C4C52FFF1BA32C7700194888 /* JSONKit.m in Sources */,
 				C4C530021BA32C7700194888 /* KSModelApp.m in Sources */,
 				C4C5300F1BA32C7700194888 /* NSStringAdditions.m in Sources */,
 				C41EFE991B513B5A0090A522 /* AppDelegate.m in Sources */,

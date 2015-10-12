@@ -24,11 +24,6 @@
                                 font:(UIFont*)font
                            alignment:(NSTextAlignment)alignment;
 
-- (NSAttributedString *)attributedString:(NSString*) HTMLText
-                            URLTextColor:(UIColor*)URLTextColor
-                                    URLs:(NSArray *__autoreleasing *)outURLs
-                               URLRanges:(NSArray *__autoreleasing *)outURLRanges;
-
 -(CGFloat)textHeight;
 -(CGFloat)textWidth;
 - (CGFloat)attributeTextWidth;

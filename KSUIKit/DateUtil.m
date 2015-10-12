@@ -47,21 +47,21 @@
     
     return date;
 }
-+(int)getDayByDate:(NSDate*)date
++(NSInteger)getDayByDate:(NSDate*)date
 {
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] autorelease];
 //	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
-	NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+	NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
+	NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
 	NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
     return [comps day];
 }
-+(int)getYearByDate:(NSDate*)date
++(NSInteger)getYearByDate:(NSDate*)date
 {
-    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] autorelease];
+    NSCalendar *calendar = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian] autorelease];
 //	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
-	NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
-	NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+	NSInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
+	NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
 	NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
     return [comps year];
 }

@@ -116,29 +116,6 @@
 }
 
 
--(NSDictionary*)deviceInfo
-{
-    struct utsname u;
-    uname(&u);
-    NSString *machine = [NSString stringWithCString:u.machine];
-    NSString *identifier = [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
-    NSString *systemName = [[UIDevice currentDevice] systemName];
-    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *modle = [[UIDevice currentDevice] model];
-    NSString *name = [[UIDevice currentDevice] name];
-    BOOL isJailbroken = [[UIDevice currentDevice] isJailbroken];
-    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                         identifier,@"macAddress",
-                         systemName,@"systemName",
-                         systemVersion,@"systemVersion",
-                         appVersion,@"appVersion",
-                         isJailbroken?@"1":@"0",@"isJailbroken",
-                         modle,@"model",
-                         name ,@"name",
-                         machine,@"deviceType",nil];
-    return [dic autorelease];
-}
 
 #pragma mark sysctlbyname utils
 - (NSString *) getSysInfoByName:(char *)typeSpecifier

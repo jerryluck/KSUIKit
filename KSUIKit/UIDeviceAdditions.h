@@ -106,10 +106,8 @@ typedef enum {
 - (NSString *) macaddress;
 - (NSString *) uniqueGlobalDeviceIdentifier;
 - (BOOL)isJailbroken;
--(NSDictionary*)deviceInfo;
 + (NSString*)getOSVersion;
 + (BOOL)isInChina;
 
-- (NSString *)getIPAddress:(BOOL)preferIPv4;
 
 @end

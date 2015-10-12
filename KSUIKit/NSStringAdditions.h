@@ -18,7 +18,7 @@
 #define ALPHANUM @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
 @interface NSString (KS)
-- (int) indexOf:(NSString *)text;
+- (NSInteger) indexOf:(NSString *)text;
 - (NSString *)URLEncodedString;
 - (NSString *)URLDecodedString;
 - (NSString *) stringFromMD5;

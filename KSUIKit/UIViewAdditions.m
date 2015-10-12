@@ -411,22 +411,6 @@ const CGFloat cxkDefaultTransitionDuration      = 0.3;
 }
 
 
-#ifdef DEBUG
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)simulateTapAtPoint:(CGPoint)location {
-  UITouch *touch = [[[UITouch alloc] initInView:self location:location] autorelease];
-
-  UIEvent *eventDown = [[[UIEvent alloc] initWithTouch:touch] autorelease];
-  [touch.view touchesBegan:[NSSet setWithObject:touch] withEvent:eventDown];
-
-  [touch changeToPhase:UITouchPhaseEnded];
-
-  UIEvent *eventUp = [[[UIEvent alloc] initWithTouch:touch] autorelease];
-  [touch.view touchesEnded:[NSSet setWithObject:touch] withEvent:eventUp];
-}
-
-#endif
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -543,9 +527,6 @@ const CGFloat cxkDefaultTransitionDuration      = 0.3;
   return nil;
 }
 
-- (BOOL)isPortrait {
-    return UIInterfaceOrientationIsPortrait(self.viewController.interfaceOrientation);
-}
 
 
 -(BOOL) containsSubView:(UIView *)subView

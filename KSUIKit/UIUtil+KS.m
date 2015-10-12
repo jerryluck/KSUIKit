@@ -327,10 +327,10 @@
     // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
     // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
     CGSize imageSize = [[UIScreen mainScreen] bounds].size;
-    if (NULL != UIGraphicsBeginImageContextWithOptions)
+//    if (NULL != UIGraphicsBeginImageContextWithOptions)
         UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
-    else
-        UIGraphicsBeginImageContext(imageSize);
+//    else
+//        UIGraphicsBeginImageContext(imageSize);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -395,11 +395,11 @@
     }
     return YES;
 }
-+ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width
-{
-    CGSize size = [string sizeWithFont:font constrainedToSize:CGSizeMake(width,100000) lineBreakMode:NSLineBreakByWordWrapping];
-    return size.height;
-}
+//+ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width
+//{
+//    CGSize size = [string sizeWithFont:font constrainedToSize:CGSizeMake(width,100000) lineBreakMode:NSLineBreakByWordWrapping];
+//    return size.height;
+//}
 
 + (UIButton*)getBackButton
 {
@@ -511,7 +511,7 @@
 	label.text = text;
 	label.textColor = textColor;
 	label.backgroundColor = [UIColor clearColor];
-	label.textAlignment = UITextAlignmentLeft;
+	label.textAlignment = NSTextAlignmentLeft;
 	label.font = font;
     return label;
 }
@@ -646,69 +646,6 @@
 	[indicator startAnimating];
 }
 
-+(void)showHubWithView:(UIView *)view atPoint:(CGPoint)point Message:(NSString*)message hasMask:(BOOL)hasMask
-{
-
-    UIView *maskView = [[UIView alloc] initWithFrame:view.bounds];
-    maskView.backgroundColor = !hasMask?[UIColor clearColor]:[UIColor colorWithWhite:0 alpha:0.5];
-    maskView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    maskView.tag = kTagCommonMaskView;
-    maskView.alpha = hasMask?0.5:0;
-    [view addSubview:maskView];
-    [maskView release];
-
-    
-    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    messageLabel.layer.cornerRadius = 6.0;
-    messageLabel.clipsToBounds = YES;
-    messageLabel.backgroundColor = [UIColor blackColor];
-    messageLabel.alpha = 0.7;
-    messageLabel.numberOfLines = 0;
-    messageLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    messageLabel.font = [UIFont boldSystemFontOfSize:16];
-    messageLabel.text = message;
-    messageLabel.textColor = [UIColor whiteColor];
-    messageLabel.textAlignment = NSTextAlignmentCenter;
-    messageLabel.tag = kTagHubTextView;
-    CGSize size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(view.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-    messageLabel.size = CGSizeMake(size.width+40, size.height+40);
-    messageLabel.center = view.center;
-    [maskView addSubview:messageLabel];
-    [messageLabel release];
-    [UIUtil addAnimationShow:maskView];
-    
-
-}
-
-+(void)showHubWithView:(UIView *)view Message:(NSString*)message hidden:(BOOL)isHidden
-{
-    
-    [UIUtil showHubWithView:view atPoint:view.center Message:message hasMask:NO];
-    if (isHidden)
-    {
-        UIView *maskView = [view viewWithTag:kTagCommonMaskView];
-
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [UIUtil addAnimationFade:maskView];
-            double delayInSeconds = 0.5;
-            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [UIUtil hideProcessIndicatorWithView:view];
-
-            });
-        });
-    }
-}
-+(void)setHubText:(NSString*)message
-{
-    UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
-    UILabel *messageLabel = (UILabel*)[window viewWithTag:kTagHubTextView];
-    messageLabel.text = message;
-    CGSize size = [message sizeWithFont:messageLabel.font constrainedToSize:CGSizeMake(window.width/4, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-    messageLabel.size = CGSizeMake(size.width+40, size.height+40);
-}
 + (void)hideProcessIndicatorWithView:(UIView *)view{
 	UIView *maskView = [view viewWithTag:kTagCommonMaskView];
 	if( maskView != nil ){
@@ -774,67 +711,67 @@
 	view.center = CGPointMake(round(view.center.x), round(view.center.y));
 }
 
-#pragma mark - image downloader
-+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view {
-    [self imageWithUrl:imgUrl toView:view shouldResize:NO];
-}
-+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size {
-    if (imgUrl == nil || view == nil) {
-        return;
-    }
-    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
-    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view resize:size];
-    [operationQueue addOperation:imgDataOperation];
-    [imgDataOperation release];
-}
-+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize {
-    if (imgUrl == nil || view == nil) {
-        return;
-    }
-    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
-    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view shouldResize:shouldResize];
-    [operationQueue addOperation:imgDataOperation];
-    [imgDataOperation release];
-}
-+(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild
-{
-    __block NSString *url = [imgUrl retain];
-    __block NSString *path = [savePath retain];
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        
-        NSLog(@"%@",url);
-        
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-        if (data)
-        {
-            [data writeToFile:path atomically:YES];
-            if (success)
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    success(path);
-
-                });
-            }
-            [url release];
-        }
-        else
-        {
-            if (faild)
-            {
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    faild(path);
-                    
-                });
-            }
-            [path release];
-        }
-        
-    });
-    
-    
-}
+//#pragma mark - image downloader
+//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view {
+//    [self imageWithUrl:imgUrl toView:view shouldResize:NO];
+//}
+//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size {
+//    if (imgUrl == nil || view == nil) {
+//        return;
+//    }
+//    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
+//    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view resize:size];
+//    [operationQueue addOperation:imgDataOperation];
+//    [imgDataOperation release];
+//}
+//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize {
+//    if (imgUrl == nil || view == nil) {
+//        return;
+//    }
+//    NSOperationQueue *operationQueue = [[[NSOperationQueue alloc] init] autorelease];
+//    ImageDataOperation *imgDataOperation = [[ImageDataOperation alloc] initWithURL:imgUrl view:view shouldResize:shouldResize];
+//    [operationQueue addOperation:imgDataOperation];
+//    [imgDataOperation release];
+//}
+//+(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild
+//{
+//    __block NSString *url = [imgUrl retain];
+//    __block NSString *path = [savePath retain];
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        
+//        
+//        NSLog(@"%@",url);
+//        
+//        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+//        if (data)
+//        {
+//            [data writeToFile:path atomically:YES];
+//            if (success)
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    success(path);
+//
+//                });
+//            }
+//            [url release];
+//        }
+//        else
+//        {
+//            if (faild)
+//            {
+//                
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    faild(path);
+//                    
+//                });
+//            }
+//            [path release];
+//        }
+//        
+//    });
+//    
+//    
+//}
 
 
 @end

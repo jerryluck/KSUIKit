@@ -39,7 +39,7 @@ typedef enum{
 /**
  *  开启Log打印
  */
-+ (void)enableNSLog;
+//+ (void)enableNSLog;
 + (NSInteger) currentOrientation;
 + (void)setOrientation:(UIInterfaceOrientation)orientation;
 + (void)animatedWithView:(UIView*)view degree:(CGFloat)degree duration:(NSTimeInterval)duration;
@@ -140,10 +140,6 @@ typedef enum{
 + (void)showProcessIndicatorWithView:(UIView *)view atPoint:(CGPoint)point hasMask:(BOOL)hasMask;
 + (void)showProcessIndicatorWithView2:(UIView *)view atPoint:(CGPoint)point hasMask:(BOOL)hasMask;
 + (void)hideProcessIndicatorWithView:(UIView *)view;
-+ (void)showHubWithView:(UIView *)view atPoint:(CGPoint)point Message:(NSString*)message hasMask:(BOOL)hasMask;
-+(void)showHubWithView:(UIView *)view Message:(NSString*)message hidden:(BOOL)isHidden
-;
-+(void)setHubText:(NSString*)message;
 + (void)showGlobalMask;
 + (void)hideGlobalMask;
 
@@ -151,13 +147,13 @@ typedef enum{
 + (void)hideModualView;
 + (void)roundCenter:(UIView *)view;
 
-+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view;
-+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size;
-+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize;
+//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view;
+//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view resize:(CGSize)size;
+//+ (void)imageWithUrl:(NSString *)imgUrl toView:(UIView *)view shouldResize:(BOOL)shouldResize;
 + (void)showFadeInAnimation:(UIView*)view endAlpha:(CGFloat)alpha;
-+(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild;
+//+(void)loadImageUrl:(NSString*)imgUrl savePath:(NSString*)savePath success:(void (^)(NSString*))success faild:(void (^)(NSString*))faild;
 
-+ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width;
+//+ (CGFloat)heightOfString:(NSString*)string withFont:(UIFont*)font withWidth:(CGFloat)width;
 + (UIButton*)getBackButton;
 @end
 
@@ -168,9 +164,9 @@ typedef enum{
     CGSize newSize;
     BOOL shouldResize;
 }
-- (id)initWithURL:(NSString *)url view:(UIView *)view;
-- (id)initWithURL:(NSString *)url view:(UIView *)view resize:(CGSize)size;
-- (id)initWithURL:(NSString *)url view:(UIView *)view shouldResize:(BOOL)resize;
+//- (id)initWithURL:(NSString *)url view:(UIView *)view;
+//- (id)initWithURL:(NSString *)url view:(UIView *)view resize:(CGSize)size;
+//- (id)initWithURL:(NSString *)url view:(UIView *)view shouldResize:(BOOL)resize;
 
 @end
 

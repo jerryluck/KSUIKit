@@ -12,7 +12,9 @@
 
 @end
 @interface NSObject(KS)
-
++ (NSString*)toJsonString:(id)obj;
++ (id)objFromJsonString:(NSString*)jsonStr;
+extern NSString *string(id obj);
 @end
 ///////////////////////////////////////////////////////////////////////////////
 @interface NSNull (KS)

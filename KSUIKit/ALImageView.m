@@ -19,7 +19,7 @@
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5([data bytes], [data length], result);
+    CC_MD5([data bytes], (CC_LONG)[data length], result);
     
     return [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
             result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],
@@ -86,7 +86,7 @@ const NSTimeInterval LOCAL_CACHE_EXPIRED_TIME_DEFAULT = 10;
     return self;
 }
 
-- (unsigned)retainCount
+- (NSUInteger)retainCount
 {
     return UINT_MAX;  //denotes an object that cannot be released
 }
@@ -505,9 +505,9 @@ const int REQUEST_RETRY_COUNT = 2;
             NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:REQUEST_TIME_OUT_INTERVAL];
             int retryCount = -1;
             while (!_asyncLoadImageFinished && REQUEST_RETRY_COUNT > retryCount && countStamp == _taskCount) {
-                NSLog(@"async load image start url:%@ countStamp:%d _taskCount:%d", [request.URL.absoluteString lastPathComponent], countStamp, _taskCount);
+                NSLog(@"async load image start url:%@ countStamp:%ld _taskCount:%ld", [request.URL.absoluteString lastPathComponent], (long)countStamp, (long)_taskCount);
                 if (0 <= retryCount) {
-                    NSLog(@"async load image usleep url:%@ countStamp:%d _taskCount:%d", [request.URL.absoluteString lastPathComponent], countStamp, _taskCount);
+                    NSLog(@"async load image usleep url:%@ countStamp:%ld _taskCount:%ld", [request.URL.absoluteString lastPathComponent], (long)countStamp, (long)_taskCount);
                     usleep(SLEEP_TIME_INTERVAL*(retryCount+1));
                 }
                 
@@ -525,7 +525,7 @@ const int REQUEST_RETRY_COUNT = 2;
                 } else {
                     data = nil;
                 }
-                NSLog(@"async load image end url:%@ countStamp:%d _taskCount:%d dataLength:%d", [self.imageURL lastPathComponent], countStamp, _taskCount, [data length]);
+                NSLog(@"async load image end url:%@ countStamp:%ld _taskCount:%ld dataLength:%lu", [self.imageURL lastPathComponent], (long)countStamp, (long)_taskCount, (unsigned long)[data length]);
             }
         } else {
             NSLog(@"async load image not start!");

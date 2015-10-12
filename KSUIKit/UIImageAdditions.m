@@ -47,7 +47,7 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
         CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
         
         if (bitmapInfo == kCGImageAlphaNone) {
-            bitmapInfo = kCGImageAlphaNoneSkipLast;
+            bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
         }
         
         
@@ -144,7 +144,7 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
     CGColorSpaceRef colorSpaceInfo = CGImageGetColorSpace(imageRef);
     
     if (bitmapInfo == kCGImageAlphaNone) {
-        bitmapInfo = kCGImageAlphaNoneSkipLast;
+        bitmapInfo = (CGBitmapInfo)kCGImageAlphaNoneSkipLast;
     }
     
     @try {
@@ -539,14 +539,14 @@ CGFloat RadianToDegrees(CGFloat radians) {return radians * 180/M_PI;};
     
     if (view)
     {
-        if(UIGraphicsBeginImageContextWithOptions != NULL)
-        {
+//        if(UIGraphicsBeginImageContextWithOptions != NULL)
+//        {
             UIGraphicsBeginImageContextWithOptions(view.frame.size, NO, 0.0);
-        }
-        else
-        {
-            UIGraphicsBeginImageContext(view.frame.size);
-        }
+//        }
+//        else
+//        {
+//            UIGraphicsBeginImageContext(view.frame.size);
+//        }
         
         //获取图像
         [view.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -680,7 +680,7 @@ static void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWi
     return resultImage;
 }
 //UIKit坐标系统原点在左上角，y方向向下的（坐标系A），但在Quartz中坐标系原点在左下角，y方向向上的(坐标系B)。图片绘制也是颠倒的。
-static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, UIImageRoundedCorner cornerMask)
+void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, UIImageRoundedCorner cornerMask)
 {
     //原点在左下方，y方向向上。移动到线条2的起点。
     CGContextMoveToPoint(context, rect.origin.x, rect.origin.y + radius);
@@ -776,10 +776,7 @@ static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, 
 
 
 
-// Private helper methods
-@interface UIImage ()
-- (CGImageRef)newBorderMask:(NSUInteger)borderSize size:(CGSize)size;
-@end
+
 
 @implementation UIImage (Alpha)
 
@@ -899,6 +896,8 @@ static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, 
 // Creates a mask that makes the outer edges transparent and everything else opaque
 // The size must include the entire mask (opaque part + transparent border)
 // The caller is responsible for releasing the returned reference by calling CGImageRelease
+
+
 - (CGImageRef)newBorderMask:(NSUInteger)borderSize size:(CGSize)size {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
     
@@ -1020,8 +1019,8 @@ static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, 
     CGContextRef    context = NULL;
     CGColorSpaceRef colorSpace;
     void *          bitmapData;
-    int             bitmapByteCount;
-    int             bitmapBytesPerRow;
+    size_t             bitmapByteCount;
+    size_t             bitmapBytesPerRow;
     
     // Get image width, height. We'll use the entire image.
     size_t pixelsWide = CGImageGetWidth(inImage);
@@ -1170,7 +1169,7 @@ static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, 
 {
     const CGFloat EffectColorAlpha = 0.6;
     UIColor *effectColor = tintColor;
-    int componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);
+    size_t componentCount = CGColorGetNumberOfComponents(tintColor.CGColor);
     if (componentCount == 2) {
         CGFloat b;
         if ([tintColor getWhite:&b alpha:NULL]) {
@@ -1243,7 +1242,7 @@ static void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, 
             // ... if d is odd, use three box-blurs of size 'd', centered on the output pixel.
             //
             CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];
-            NSUInteger radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
+            uint32_t radius = floor(inputRadius * 3. * sqrt(2 * M_PI) / 4 + 0.5);
             if (radius % 2 != 1) {
                 radius += 1; // force radius to be odd so that the three box-blur methodology works.
             }
